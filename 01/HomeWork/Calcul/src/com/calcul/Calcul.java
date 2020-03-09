@@ -5,23 +5,32 @@ import java.util.Scanner;
 public class Calcul {
 	public static void main(String[] args) {
 
-		System.out.println("Программа предназначена для проведения выбранной операции"
-				+ " над двумя введёнными числами. Для начала введите желаемое действие"
-				+ " (+, -, *, /, div, mod или ^):");
+		
+		System.out.println("Программа предназначена для проведения выбранной"
+				+ " операции над двумя введёнными числами. Для начала введите"
+				+ " желаемое действие (+, -, *, /, div, mod или ^):");
 		var scanner = new Scanner(System.in);
-		var znak = scanner.next();
-//		while ((znak != "+") && (znak != "-") && (znak != "*") && (znak != "/") 
-//				&& (znak != "div") && (znak != "mod") && (znak != "^")) {
-//			System.out.println("Некорректный ввод. Набор допустимых символов описан" + " выше, повторите попытку.");
-//			znak = scanner.next();
-//		}
+		var vvod = scanner.nextLine();
+		var znak = vvod.replaceAll(" ", "");
+		while ((znak.equals("+")== false) && (znak.equals("-")== false)
+				&& (znak.equals("*")== false) && (znak.equals("/"))== false
+				&& (znak.equals("div")== false) && (znak.equals("mod")== false) 
+				&& (znak.equals("^")== false)) {
+			System.out.println("Некорректный ввод. Набор допустимых символов описан"
+				+ " выше, повторите попытку.");
+			vvod = scanner.nextLine();
+			znak = vvod.replaceAll(" ", "");
+		}
 
+		
 		System.out.println("Введите число, которое будет являться первым слагаемым,"
-				+ "уменьшаемым, превым множителем, делимым или основанием степени," + " соответственно:");
+				+ " уменьшаемым, превым множителем, делимым или основанием степени," 
+				+ " соответственно:");
 		var pervoe = scanner.nextInt();
 		System.out.println("Теперь введите второе число:");
 		var vtoroe = scanner.nextInt();
 
+		
 		switch (znak) {
 		case "+": {
 			System.out.println("Результат суммы:");
@@ -66,27 +75,26 @@ public class Calcul {
 			break;
 		}
 		case "^": {
-			var step = 0;
 			float result = 1;
-			float operation = 1;
+			short minus = 0;
 			System.out.println("Результат возведения в степень:");
-			if (step == vtoroe) {
+			if (vtoroe == 0) {
 				System.out.println(result);
-				break;
-			}
-			while (vtoroe > step) {
-				result = (result * pervoe);
-				step = (step + 1);
-			}
-			if ((vtoroe < step) && (pervoe == 0)) {
+			} else if ((vtoroe < 0) && (pervoe == 0)) {
 				System.out.println(
-						"Получить невозможно, так как в ходе выполнения операции производится недопустимое деление на ноль.");
+						"Получить невозможно, так как в ходе выполнения "
+						+ "операции производится недопустимое деление на ноль.");
 				break;
+			} else if (vtoroe < 0) {
+				vtoroe = vtoroe * (-1);
+				minus = 1;
 			}
-			while (vtoroe < step) {
-				operation = (operation * pervoe);
-				result = 1/operation;
-				step = (step - 1);
+			while (vtoroe != 0) {
+				vtoroe -= 1;
+				result *= pervoe;
+			}
+			if (minus == 1) {
+				result = 1 / result;
 			}
 			System.out.println(result);
 			break;
